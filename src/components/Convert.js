@@ -3,6 +3,17 @@ import { useState, useEffect } from 'react';
 
 function Convert({ language, text }) {
     const [translated, setTranslated] = useState('');
+    const [debouncedText, setDebouncedText] = useState(text);
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedText(text);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timerId);
+        };
+    }, [text]);
 
     useEffect(() => {
         const doTranslation = async () => {
@@ -11,7 +22,7 @@ function Convert({ language, text }) {
                 {},
                 {
                     params: {
-                        q: text,
+                        q: debouncedText,
                         target: language.value,
                         key: 'AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM',
                     },
@@ -21,8 +32,10 @@ function Convert({ language, text }) {
             setTranslated(data.data.translations[0].translatedText);
         };
 
-        doTranslation();
-    }, [language, text]);
+        if (debouncedText !== '') {
+            doTranslation();
+        }
+    }, [language, debouncedText]);
 
     return (
         <div>
