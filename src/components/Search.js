@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Search() {
-    const [term, setTerm] = useState('programming');
+    const [term, setTerm] = useState('react');
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ function Search() {
             <div className="item" key={result.pageid}>
                 <div className="content">
                     <div className="header">{result.title}</div>
-                    {result.snippet}
+                    <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span>
                 </div>
             </div>
         );
