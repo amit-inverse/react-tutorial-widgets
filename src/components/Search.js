@@ -5,21 +5,18 @@ function Search() {
     const [term, setTerm] = useState('');
 
     useEffect(() => {
-        // OPTION 1
-        // const search = async () => {
-        //     await axios.get('https://wiki....');
-        // };
-        // search();
-
-        // OPTION 2
-        // (async () => {
-        //     await axios.get('https://wiki....');
-        // })();
-
-        // OPTION 3
-        axios.get('https://wiki....').then((response) => {
-            console.log(response);
-        });
+        const search = async () => {
+            await axios.get('https://en.wikipedia.org/w/api.php', {
+                params: {
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: term,
+                },
+            });
+        };
+        search();
     }, [term]);
 
     return (
