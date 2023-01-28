@@ -1,11 +1,26 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Search() {
     const [term, setTerm] = useState('');
 
     useEffect(() => {
-        console.log('Hello!');
-    }, []);
+        // OPTION 1
+        // const search = async () => {
+        //     await axios.get('https://wiki....');
+        // };
+        // search();
+
+        // OPTION 2
+        // (async () => {
+        //     await axios.get('https://wiki....');
+        // })();
+
+        // OPTION 3
+        axios.get('https://wiki....').then((response) => {
+            console.log(response);
+        });
+    }, [term]);
 
     return (
         <div>
